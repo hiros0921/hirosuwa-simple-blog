@@ -1,16 +1,12 @@
-# Astro Starter Kit: Blog
+# HiroSuwa Blog
 
-```sh
-npm create astro@latest -- --template blog
-```
+シンプルで高速なブログサイト。Astroで構築されています。
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/blog)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/blog)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
+## 🎉 プロジェクトの経緯
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+- Sanity + Reactで18時間以上かけてもエラーが解決できず
+- Astroに切り替えて**5分で完成！**
+- エラーなし、超高速、簡単！
 
 Features:
 
