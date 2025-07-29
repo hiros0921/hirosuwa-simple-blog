@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIRO SUWA - Dark Modern Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans JP', 'Zen Kaku Gothic New', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #8b5cf6;
+            --accent-color: #ec4899;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --bg-glass: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.1);
+        }
+        
+        [data-theme="light"] {
+            --primary-color: #2563eb;
+            --secondary-color: #7c3aed;
+            --accent-color: #db2777;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --bg-glass: rgba(0, 0, 0, 0.05);
+            --border-glass: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="light"] body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 25%, #fce7f3 50%, #ddd6fe 75%, #f0f9ff 100%);
+            color: var(--text-primary);
+        }
+        
+        [data-theme="light"] .glass-effect {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+        }
+        
+        [data-theme="light"] .glass-effect-strong {
+            background: rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+        }
+        
+        [data-theme="light"] .neon-text {
+            text-shadow: 0 0 10px rgba(37, 99, 235, 0.5),
+                         0 0 20px rgba(37, 99, 235, 0.3),
+                         0 0 30px rgba(37, 99, 235, 0.2);
+        }
+        
+        body {
+            line-height: 1.7;
+            letter-spacing: 0.02em;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.3;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        
+        p {
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 25%, #16213e 50%, #0f3460 75%, #0f0f23 100%);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glass-effect {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-effect-strong {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.8),
+                         0 0 20px rgba(59, 130, 246, 0.6),
+                         0 0 30px rgba(59, 130, 246, 0.4);
+        }
+        
+        .accent-gradient {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hover-glow {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-glow:hover {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6),
+                        0 0 60px rgba(59, 130, 246, 0.4);
+            transform: translateY(-5px);
+        }
+        
+        .animated-border {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+            background-size: 400% 400%;
+            animation: border-animation 3s ease infinite;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .animated-border:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes border-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .pulse-glow {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-gray-100">
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas"></canvas>
+    
+    <div class="content-wrapper">
+        <!-- ナビゲーション -->
+        <nav id="navbar" class="fixed top-0 w-full glass-effect z-50 py-4 transition-all duration-300">
+            <div class="container mx-auto px-6 flex justify-between items-center">
+                <h1 class="text-2xl font-bold neon-text cursor-pointer hover:scale-105 transition-transform">HIRO BLOG</h1>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link relative py-2 hover:text-blue-400 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-400 after:to-purple-400 after:transition-all after:duration-300 hover:after:w-full">ホーム</a>
+                    <a href="#" class="nav-link relative py-2 hover:text-blue-400 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-400 after:to-purple-400 after:transition-all after:duration-300 hover:after:w-full">記事一覧</a>
+                    <a href="#" class="nav-link relative py-2 hover:text-blue-400 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-400 after:to-purple-400 after:transition-all after:duration-300 hover:after:w-full">プロフィール</a>
+                    <a href="#" class="nav-link relative py-2 hover:text-blue-400 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-400 after:to-purple-400 after:transition-all after:duration-300 hover:after:w-full">お問い合わせ</a>
+                    <button id="theme-toggle" class="ml-4 p-2 rounded-lg glass-effect hover:glass-effect-strong transition-all" title="テーマ切り替え">
+                        <svg class="w-5 h-5 hidden dark-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg class="w-5 h-5 light-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-lg glass-effect hover:glass-effect-strong transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- モバイルメニュー -->
+            <div id="mobile-menu" class="md:hidden absolute top-full left-0 w-full glass-effect-strong transform -translate-y-full opacity-0 invisible transition-all duration-300">
+                <div class="container mx-auto px-6 py-6 space-y-4">
+                    <a href="#" class="block py-3 px-4 rounded-lg hover:glass-effect-strong hover:text-blue-400 transition-all duration-300">ホーム</a>
+                    <a href="#" class="block py-3 px-4 rounded-lg hover:glass-effect-strong hover:text-blue-400 transition-all duration-300">記事一覧</a>
+                    <a href="#" class="block py-3 px-4 rounded-lg hover:glass-effect-strong hover:text-blue-400 transition-all duration-300">プロフィール</a>
+                    <a href="#" class="block py-3 px-4 rounded-lg hover:glass-effect-strong hover:text-blue-400 transition-all duration-300">お問い合わせ</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ヒーローセクション -->
+        <section class="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
+            <!-- 背景画像 -->
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop" alt="Hero Background" class="w-full h-full object-cover opacity-20">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/80"></div>
+            </div>
+            
+            <div class="absolute inset-0 overflow-hidden">
+                <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 floating"></div>
+                <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 floating" style="animation-delay: 2s;"></div>
+            </div>
+            
+            <div class="z-10 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <!-- テキストコンテンツ -->
+                <div class="text-center md:text-left">
+                    <h2 class="text-5xl md:text-7xl font-black mb-6 accent-gradient">
+                        限界を超えた
+                    </h2>
+                    <h3 class="text-3xl md:text-5xl font-bold mb-8 neon-text">
+                        ブログ体験
+                    </h3>
+                    <p class="text-lg md:text-xl mb-12 text-gray-300 font-light leading-relaxed">
+                        テクノロジーとクリエイティビティが交差する場所。
+                        最新の技術トレンドから実践的な開発テクニックまで、
+                        あなたの成長を加速させる情報をお届けします。
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#latest-articles" class="glass-effect px-8 py-4 rounded-full text-lg font-medium hover-glow animated-border group relative overflow-hidden inline-block">
+                            <span class="relative z-10">最新記事を読む</span>
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                        </a>
+                        <a href="#profile" class="border border-gray-600 px-8 py-4 rounded-full text-lg font-medium hover:border-blue-400 hover:text-blue-400 transition-all duration-300 inline-block">
+                            プロフィールを見る
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- プロフィール写真 -->
+                <div class="relative flex justify-center">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop" alt="Hiro Suwa" class="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-white/10">
+                        <div class="absolute -bottom-4 -right-4 glass-effect-strong px-6 py-3 rounded-full">
+                            <span class="text-sm font-bold text-blue-400">フルスタックエンジニア</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 記事一覧 -->
+        <section id="latest-articles" class="container mx-auto px-6 py-24">
+            <h2 class="text-4xl font-bold mb-12 text-center neon-text">最新記事</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 記事カード1 -->
+                <article class="glass-effect rounded-2xl overflow-hidden hover-glow animated-border group cursor-pointer transform transition-all duration-300 hover:scale-105">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=400&fit=crop" alt="Next Generation Web Development" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-4 text-sm text-gray-400">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM4 8h12v8H4V8z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>2024.01.20</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>5分</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">次世代のWeb開発トレンド</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed line-clamp-3">AIとWebAssemblyが変える未来のフロントエンド開発について深く掘り下げます。最新の機械学習モデルをWebブラウザ上で動作させる手法から、パフォーマンスを最大化するためのベストプラクティスまで、幅広くカバーします。</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-blue-400 font-medium group-hover:text-blue-300 transition-colors flex items-center gap-2">
+                                続きを読む
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <div class="flex space-x-2">
+                                <span class="px-3 py-1 bg-blue-500/20 rounded-full text-xs">Tech</span>
+                                <span class="px-3 py-1 bg-purple-500/20 rounded-full text-xs">AI</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 記事カード2 -->
+                <article class="glass-effect rounded-2xl overflow-hidden hover-glow animated-border group cursor-pointer transform transition-all duration-300 hover:scale-105">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop" alt="Design System Architecture" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center mb-4 text-sm text-gray-400">
+                            <span>2024.01.18</span>
+                            <span class="mx-2">•</span>
+                            <span>8分で読める</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">デザインシステムの構築</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed line-clamp-3">スケーラブルで一貫性のあるデザインシステムを構築するためのベストプラクティス。コンポーネントライブラリの設計から、チーム全体でのデザイントークンの運用までを網羅します。</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-blue-400 font-medium group-hover:text-blue-300 transition-colors flex items-center gap-2">
+                                続きを読む
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <div class="flex space-x-2">
+                                <span class="px-3 py-1 bg-pink-500/20 rounded-full text-xs">Design</span>
+                                <span class="px-3 py-1 bg-indigo-500/20 rounded-full text-xs">UI/UX</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 記事カード3 -->
+                <article class="glass-effect rounded-2xl overflow-hidden hover-glow animated-border group cursor-pointer transform transition-all duration-300 hover:scale-105">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" alt="Performance Optimization" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center mb-4 text-sm text-gray-400">
+                            <span>2024.01.15</span>
+                            <span class="mx-2">•</span>
+                            <span>6分で読める</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">パフォーマンス最適化の極意</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed line-clamp-3">Core Web Vitalsを改善し、ユーザー体験を劇的に向上させる実践的テクニック。レイジーローディング、コード分割、リソース最適化など、今すぐ実践できる改善手法を紹介します。</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-blue-400 font-medium group-hover:text-blue-300 transition-colors flex items-center gap-2">
+                                続きを読む
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                            <div class="flex space-x-2">
+                                <span class="px-3 py-1 bg-orange-500/20 rounded-full text-xs">Performance</span>
+                                <span class="px-3 py-1 bg-green-500/20 rounded-full text-xs">SEO</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- プロフィールセクション -->
+        <section id="profile" class="container mx-auto px-6 py-24">
+            <div class="glass-effect rounded-3xl p-10 md:p-16 max-w-4xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-40 h-40 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-1">
+                        <div class="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
+                            <span class="text-4xl font-bold">H</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 class="text-3xl font-bold mb-4 neon-text">HIRO SUWA</h3>
+                        <p class="text-gray-300 mb-8 leading-relaxed">
+                            フルスタックエンジニア。最新技術とクリエイティブなソリューションを追求し、
+                            より良いWeb体験を創造することに情熱を注いでいます。
+                        </p>
+                        <div class="flex justify-center md:justify-start space-x-4">
+                            <a href="#" class="glass-effect p-3 rounded-full hover-glow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="glass-effect p-3 rounded-full hover-glow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="glass-effect p-3 rounded-full hover-glow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.71 6.29l-5 5a1 1 0 01-1.42 0l-2-2a1 1 0 111.42-1.42l1.29 1.3 4.29-4.3a1 1 0 011.42 1.42z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- フッター -->
+        <footer class="glass-effect py-8 mt-20">
+            <div class="container mx-auto px-6 text-center">
+                <p class="text-gray-400">© 2024 HIRO BLOG. Pushing boundaries, one post at a time.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Three.js セットアップ
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: document.getElementById('three-canvas'),
+            alpha: true,
+            antialias: true
+        });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // カメラ位置
+        camera.position.z = 50;
+        
+        // パーティクルシステム
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 3000;
+        const posArray = new Float32Array(particlesCount * 3);
+        
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 100;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
+        // パーティクルマテリアル
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.1,
+            color: 0x3b82f6,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        
+        // 回転する幾何学図形
+        const geometry = new THREE.IcosahedronGeometry(10, 1);
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x8b5cf6,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.3
+        });
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+        
+        // 追加の幾何学図形
+        const torusGeometry = new THREE.TorusGeometry(15, 3, 16, 100);
+        const torusMaterial = new THREE.MeshBasicMaterial({
+            color: 0xec4899,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.2
+        });
+        const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+        torus.position.x = 20;
+        scene.add(torus);
+        
+        // マウス座標
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+        
+        // アニメーションループ
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // パーティクルの回転
+            particlesMesh.rotation.y += 0.0005;
+            particlesMesh.rotation.x += 0.0005;
+            
+            // 幾何学図形の回転
+            mesh.rotation.x += 0.01;
+            mesh.rotation.y += 0.01;
+            
+            torus.rotation.x += 0.005;
+            torus.rotation.y += 0.01;
+            
+            // マウス追従
+            mesh.position.x = mouseX * 10;
+            mesh.position.y = mouseY * 10;
+            
+            torus.position.x = 20 - mouseX * 5;
+            torus.position.y = -mouseY * 5;
+            
+            // カメラの微妙な動き
+            camera.position.x = mouseX * 5;
+            camera.position.y = mouseY * 5;
+            camera.lookAt(scene.position);
+            
+            renderer.render(scene, camera);
+        }
+        
+        // リサイズ対応
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        animate();
+        
+        // スクロール時のヘッダー変更
+        let lastScrollY = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 100) {
+                navbar.classList.add('glass-effect-strong');
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.remove('glass-effect-strong');
+                navbar.classList.remove('py-2');
+                navbar.classList.add('py-4');
+            }
+            
+            if (currentScrollY > lastScrollY && currentScrollY > 500) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollY = currentScrollY;
+        });
+        
+        // モバイルメニューの開閉
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isMenuOpen = false;
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'invisible');
+                mobileMenu.classList.add('translate-y-0', 'opacity-100', 'visible');
+                mobileMenuToggle.innerHTML = `
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                `;
+            } else {
+                mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'invisible');
+                mobileMenu.classList.remove('translate-y-0', 'opacity-100', 'visible');
+                mobileMenuToggle.innerHTML = `
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                `;
+            }
+        });
+        
+        // ダークモード切り替え
+        const themeToggle = document.getElementById('theme-toggle');
+        const darkIcon = themeToggle.querySelector('.dark-icon');
+        const lightIcon = themeToggle.querySelector('.light-icon');
+        
+        // システム設定を確認
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // 保存されたテーマを取得、なければシステム設定に従う
+        const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
+        
+        // 初期テーマを設定
+        if (currentTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            darkIcon.classList.remove('hidden');
+            lightIcon.classList.add('hidden');
+        } else {
+            darkIcon.classList.add('hidden');
+            lightIcon.classList.remove('hidden');
+        }
+        
+        // テーマ切り替えボタンのクリックイベント
+        themeToggle.addEventListener('click', () => {
+            const theme = document.documentElement.getAttribute('data-theme');
+            
+            if (theme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            }
+        });
+        
+        // システムテーマ変更の監視
+        prefersDarkScheme.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    document.documentElement.removeAttribute('data-theme');
+                    darkIcon.classList.add('hidden');
+                    lightIcon.classList.remove('hidden');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    darkIcon.classList.remove('hidden');
+                    lightIcon.classList.add('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

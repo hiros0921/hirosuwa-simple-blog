@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ブログ記事作成 - HIRO BLOG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Noto Sans JP', sans-serif; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 25%, #16213e 50%, #0f3460 75%, #0f0f23 100%);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8">新しいブログ記事を作成</h1>
+        
+        <form id="blog-form" class="space-y-6">
+            <!-- タイトル -->
+            <div>
+                <label class="block text-sm font-medium mb-2">記事タイトル</label>
+                <input type="text" id="title" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-blue-400 focus:outline-none" placeholder="魅力的なタイトルを入力">
+            </div>
+            
+            <!-- カテゴリ -->
+            <div>
+                <label class="block text-sm font-medium mb-2">カテゴリ（カンマ区切り）</label>
+                <input type="text" id="category" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-blue-400 focus:outline-none" placeholder="Tech, AI, Design">
+            </div>
+            
+            <!-- アイキャッチ画像URL -->
+            <div>
+                <label class="block text-sm font-medium mb-2">アイキャッチ画像URL</label>
+                <input type="url" id="image" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-blue-400 focus:outline-none" placeholder="https://example.com/image.jpg">
+            </div>
+            
+            <!-- 抜粋 -->
+            <div>
+                <label class="block text-sm font-medium mb-2">記事の抜粋</label>
+                <textarea id="excerpt" rows="3" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-blue-400 focus:outline-none" placeholder="記事の概要を簡潔に説明"></textarea>
+            </div>
+            
+            <!-- 本文 -->
+            <div>
+                <label class="block text-sm font-medium mb-2">記事本文（Markdown対応）</label>
+                <textarea id="content" rows="20" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-blue-400 focus:outline-none font-mono text-sm" placeholder="# 見出し1&#10;## 見出し2&#10;&#10;本文を書きます...&#10;&#10;- リスト項目1&#10;- リスト項目2"></textarea>
+            </div>
+            
+            <!-- 読了時間 -->
+            <div>
+                <label class="block text-sm font-medium mb-2">読了時間（分）</label>
+                <input type="number" id="readTime" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-blue-400 focus:outline-none" placeholder="5" min="1">
+            </div>
+            
+            <!-- 送信ボタン -->
+            <div class="flex gap-4">
+                <button type="submit" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors">
+                    記事を保存
+                </button>
+                <button type="button" id="preview-btn" class="px-8 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg font-medium transition-colors">
+                    プレビュー
+                </button>
+            </div>
+        </form>
+        
+        <!-- プレビューエリア -->
+        <div id="preview" class="mt-12 p-8 rounded-lg bg-white/5 border border-white/10 hidden">
+            <h2 class="text-2xl font-bold mb-4">プレビュー</h2>
+            <div id="preview-content"></div>
+        </div>
+    </div>
+    
+    <script>
+        // フォーム送信処理
+        document.getElementById('blog-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const post = {
+                id: Date.now(),
+                title: document.getElementById('title').value,
+                excerpt: document.getElementById('excerpt').value,
+                content: document.getElementById('content').value,
+                date: new Date().toISOString().split('T')[0],
+                readTime: parseInt(document.getElementById('readTime').value) || 5,
+                category: document.getElementById('category').value.split(',').map(c => c.trim()),
+                image: document.getElementById('image').value
+            };
+            
+            // LocalStorageに保存（実際はサーバーに送信）
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            posts.unshift(post);
+            localStorage.setItem('blogPosts', JSON.stringify(posts));
+            
+            alert('記事を保存しました！');
+            window.location.href = 'index.html';
+        });
+        
+        // プレビュー機能
+        document.getElementById('preview-btn').addEventListener('click', () => {
+            const preview = document.getElementById('preview');
+            const previewContent = document.getElementById('preview-content');
+            const content = document.getElementById('content').value;
+            
+            // 簡易Markdownパーサー
+            const html = content
+                .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold mt-4 mb-2">$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-6 mb-3">$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mt-8 mb-4">$1</h1>')
+                .replace(/^\* (.+)/gim, '<li class="ml-4">• $1</li>')
+                .replace(/^- (.+)/gim, '<li class="ml-4">• $1</li>')
+                .replace(/\*\*(.+)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '</p><p class="mb-4">')
+                .replace(/^/, '<p class="mb-4">')
+                .replace(/$/, '</p>');
+            
+            previewContent.innerHTML = html;
+            preview.classList.remove('hidden');
+            preview.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
