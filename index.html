@@ -563,46 +563,15 @@
         });
         
         // ブログ記事を表示する関数
-        function displayBlogPosts() {
+        async function displayBlogPosts() {
             const container = document.getElementById('blog-posts-container');
             const noPostsMessage = document.getElementById('no-posts-message');
             
-            // LocalStorageから記事を取得
-            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
-            
-            // デフォルトの記事（LocalStorageに記事がない場合）
-            const defaultPosts = [
-                {
-                    id: 1,
-                    title: "次世代のWeb開発トレンド",
-                    excerpt: "AIとWebAssemblyが変える未来のフロントエンド開発について深く掘り下げます。最新の機械学習モデルをWebブラウザ上で動作させる手法から、パフォーマンスを最大化するためのベストプラクティスまで、幅広くカバーします。",
-                    date: "2024-01-20",
-                    readTime: 5,
-                    category: ["Tech", "AI"],
-                    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=400&fit=crop"
-                },
-                {
-                    id: 2,
-                    title: "デザインシステムの構築",
-                    excerpt: "スケーラブルで一貫性のあるデザインシステムを構築するためのベストプラクティス。コンポーネントライブラリの設計から、チーム全体でのデザイントークンの運用までを網羅します。",
-                    date: "2024-01-18",
-                    readTime: 8,
-                    category: ["Design", "UI/UX"],
-                    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop"
-                },
-                {
-                    id: 3,
-                    title: "パフォーマンス最適化の極意",
-                    excerpt: "Core Web Vitalsを改善し、ユーザー体験を劇的に向上させる実践的テクニック。レイジーローディング、コード分割、リソース最適化など、今すぐ実践できる改善手法を紹介します。",
-                    date: "2024-01-15",
-                    readTime: 6,
-                    category: ["Performance", "SEO"],
-                    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"
-                }
-            ];
-            
-            // 使用する記事リスト（LocalStorageに記事があればそれを、なければデフォルトを使用）
-            const displayPosts = posts.length > 0 ? posts : defaultPosts;
+            try {
+                // posts.jsonから記事を取得
+                const response = await fetch('posts.json');
+                const data = await response.json();
+                const displayPosts = data.posts || [];
             
             if (displayPosts.length === 0) {
                 container.classList.add('hidden');
@@ -616,6 +585,77 @@
             
             // 各記事を表示
             displayPosts.forEach(post => {
+                const categoryColors = {
+                    'Tech': 'blue',
+                    'AI': 'purple',
+                    'Design': 'pink',
+                    'UI/UX': 'indigo',
+                    'Performance': 'orange',
+                    'SEO': 'green'
+                };
+                
+                const postHTML = `
+                    <article class="glass-effect rounded-2xl overflow-hidden hover-glow animated-border group cursor-pointer transform transition-all duration-300 hover:scale-105">
+                        <div class="h-48 relative overflow-hidden">
+                            <img src="${post.image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop'}" alt="${post.title}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4 text-sm text-gray-400">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM4 8h12v8H4V8z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>${formatDate(post.date)}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>${post.readTime}分</span>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">${post.title}</h3>
+                            <p class="text-gray-300 mb-6 leading-relaxed line-clamp-3">${post.excerpt}</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-blue-400 font-medium group-hover:text-blue-300 transition-colors flex items-center gap-2">
+                                    続きを読む
+                                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </span>
+                                <div class="flex space-x-2">
+                                    ${(post.category || []).map(cat => {
+                                        const color = categoryColors[cat] || 'gray';
+                                        return `<span class="px-3 py-1 bg-${color}-500/20 rounded-full text-xs">${cat}</span>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `;
+                container.innerHTML += postHTML;
+            });
+            } catch (error) {
+                console.error('記事の読み込みに失敗しました:', error);
+                // エラーの場合はLocalStorageから読み込む（フォールバック）
+                const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+                if (posts.length > 0) {
+                    displayPostsFromLocal(posts);
+                } else {
+                    container.classList.add('hidden');
+                    noPostsMessage.classList.remove('hidden');
+                }
+            }
+        }
+        
+        // LocalStorageから記事を表示する関数（フォールバック用）
+        function displayPostsFromLocal(posts) {
+            const container = document.getElementById('blog-posts-container');
+            container.innerHTML = '';
+            
+            posts.forEach(post => {
                 const categoryColors = {
                     'Tech': 'blue',
                     'AI': 'purple',

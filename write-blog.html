@@ -24,6 +24,39 @@
     <div class="max-w-4xl mx-auto">
         <h1 class="text-4xl font-bold mb-8">新しいブログ記事を作成</h1>
         
+        <!-- 使い方の説明 -->
+        <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                記事の作成方法
+            </h2>
+            <ol class="space-y-2 text-gray-300">
+                <li>1. このフォームで記事を作成します（現在はプレビューのみ）</li>
+                <li>2. <code class="bg-gray-700 px-2 py-1 rounded text-sm">posts.json</code> ファイルを直接編集します</li>
+                <li>3. GitHubにプッシュすると自動的にサイトに反映されます</li>
+            </ol>
+            <div class="mt-4 p-4 bg-gray-800/50 rounded-lg">
+                <p class="text-sm text-gray-400 mb-2">posts.jsonの編集例：</p>
+                <pre class="text-xs overflow-x-auto"><code>{
+  "posts": [
+    {
+      "id": 4,
+      "title": "新しい記事のタイトル",
+      "excerpt": "記事の概要",
+      "content": "記事の本文（Markdown形式）",
+      "date": "2024-01-30",
+      "readTime": 5,
+      "category": ["Tech"],
+      "image": "画像URL"
+    },
+    // 既存の記事...
+  ]
+}</code></pre>
+            </div>
+        </div>
+        
         <form id="blog-form" class="space-y-6">
             <!-- タイトル -->
             <div>
@@ -95,13 +128,32 @@
                 image: document.getElementById('image').value
             };
             
-            // LocalStorageに保存（実際はサーバーに送信）
+            // 記事データをコンソールに表示（コピー用）
+            console.log('新しい記事データ（posts.jsonに追加してください）:');
+            console.log(JSON.stringify(post, null, 2));
+            
+            // LocalStorageにも保存（ローカルプレビュー用）
             const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
             posts.unshift(post);
             localStorage.setItem('blogPosts', JSON.stringify(posts));
             
-            alert('記事を保存しました！');
-            window.location.href = 'index.html';
+            // 記事データを表示
+            const alertMessage = `
+記事データが生成されました！
+
+以下の手順で記事を公開してください：
+1. 開発者ツールのコンソールから記事データをコピー
+2. posts.jsonファイルを編集
+3. GitHubにプッシュ
+
+※ ローカルプレビューとして保存されました。
+`;
+            alert(alertMessage);
+            
+            // クリップボードにコピー
+            navigator.clipboard.writeText(JSON.stringify(post, null, 2)).then(() => {
+                console.log('記事データをクリップボードにコピーしました！');
+            });
         });
         
         // プレビュー機能
