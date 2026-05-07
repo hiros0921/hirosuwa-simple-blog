@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIRO SUWA メールマガジン — AI・テクノロジー・投資の最前線</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Noto Sans JP', sans-serif; }
+        body { background: #0a0a1a; color: #f3f4f6; }
+        .gradient-hero { background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 30%, #2d1b4e 60%, #1a1a3e 100%); }
+        .glow-pink { box-shadow: 0 0 40px rgba(236, 72, 153, 0.4), 0 0 80px rgba(236, 72, 153, 0.15); }
+        .glow-blue { box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); }
+        .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .card-hover { transition: transform 0.3s, box-shadow 0.3s; }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(139, 92, 246, 0.25); }
+        .cta-btn { background: linear-gradient(135deg, #ec4899, #f43f5e, #f97316); transition: transform 0.2s, box-shadow 0.2s; }
+        .cta-btn:hover { transform: scale(1.03); box-shadow: 0 0 40px rgba(236, 72, 153, 0.5); }
+        .stat-glow { text-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+        .float { animation: float 6s ease-in-out infinite; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- ナビ -->
+    <nav class="fixed top-0 w-full z-50 glass py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-lg font-bold" style="text-shadow: 0 0 10px rgba(59,130,246,0.6);">← HIRO BLOG に戻る</a>
+        </div>
+    </nav>
+
+    <!-- ヒーロー -->
+    <section class="gradient-hero min-h-screen flex items-center relative overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-purple-600 rounded-full filter blur-3xl opacity-20 float"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl opacity-15 float" style="animation-delay:3s;"></div>
+
+        <div class="container mx-auto px-6 py-32 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <p class="text-sm font-bold tracking-widest text-pink-400 mb-6 uppercase">HIRO SUWA Newsletter</p>
+                <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+                    <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">情報の最前線</span>を、<br>あなたのメールに。
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed max-w-2xl mx-auto">
+                    AI・テクノロジー・投資・ガジェットなど、<br class="hidden md:block">
+                    知っておくべき最新トレンドを厳選してお届けするメールマガジンです。
+                </p>
+                <a href="#subscribe" class="cta-btn inline-flex items-center gap-3 px-10 py-5 rounded-full text-xl font-bold text-white glow-pink">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    今すぐ無料登録する
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数字で見る実績 -->
+    <section class="py-20 border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-center">
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <p class="text-4xl md:text-5xl font-black text-blue-400 stat-glow mb-2">無料</p>
+                    <p class="text-gray-400 text-sm">登録・購読料</p>
+                </div>
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <p class="text-4xl md:text-5xl font-black text-purple-400 stat-glow mb-2">週2回</p>
+                    <p class="text-gray-400 text-sm">配信頻度</p>
+                </div>
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <p class="text-4xl md:text-5xl font-black text-pink-400 stat-glow mb-2">厳選</p>
+                    <p class="text-gray-400 text-sm">本当に役立つ情報だけ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 配信内容 -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">配信内容</h2>
+            <p class="text-gray-400 text-center mb-14 max-w-xl mx-auto">テクノロジーから投資まで、幅広いジャンルの「知って得する情報」を凝縮してお届けします。</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="glass rounded-2xl p-7 card-hover">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">AI・テクノロジー</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">ChatGPT、生成AI、最新ツールなど、知らないと損するテック情報。</p>
+                </div>
+                <div class="glass rounded-2xl p-7 card-hover">
+                    <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">株式・投資</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">マーケット動向や注目銘柄など、資産形成に役立つ視点を共有。</p>
+                </div>
+                <div class="glass rounded-2xl p-7 card-hover">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">ガジェット</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">話題のデバイスやサービスの実機レビュー＆比較。</p>
+                </div>
+                <div class="glass rounded-2xl p-7 card-hover">
+                    <div class="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">時事・ニュース</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">日々のニュースをエンジニア視点で深掘り解説。</p>
+                </div>
+                <div class="glass rounded-2xl p-7 card-hover">
+                    <div class="w-12 h-12 rounded-xl bg-pink-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">業界の裏話</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">他では読めない、業界のリアルな話をここだけで配信。</p>
+                </div>
+                <div class="glass rounded-2xl p-7 card-hover">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">エンジニアリング</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Web開発・プログラミングの実践的なTipsやトレンド。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 登録フォーム -->
+    <section id="subscribe" class="py-24 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/10 to-transparent"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-xl mx-auto glass rounded-3xl p-10 md:p-14 glow-blue">
+                <div class="text-center mb-8">
+                    <svg class="w-14 h-14 mx-auto mb-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                    <h2 class="text-2xl md:text-3xl font-bold mb-3">無料でメルマガに登録</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed">メールアドレスを入力するだけ。<br>いつでも解除できます。</p>
+                </div>
+
+                <form id="newsletter-form" class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-300 mb-1">お名前</label>
+                        <input type="text" id="name" name="name" required placeholder="例：すわ ひろゆき"
+                            class="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/15 text-white placeholder-gray-500 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 transition-all">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">メールアドレス</label>
+                        <input type="email" id="email" name="email" required placeholder="you@example.com"
+                            class="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/15 text-white placeholder-gray-500 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 transition-all">
+                    </div>
+                    <button type="submit" class="cta-btn w-full py-4 rounded-xl text-lg font-bold text-white glow-pink flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        登録する（無料）
+                    </button>
+                    <p class="text-xs text-gray-500 text-center mt-3">※ スパムは送りません。いつでもワンクリックで解除できます。</p>
+                </form>
+
+                <div id="success-message" class="hidden text-center py-8">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-green-400">登録ありがとうございます！</h3>
+                    <p class="text-gray-400 text-sm">確認メールをお送りしました。<br>メールボックスをご確認ください。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- プロフィール -->
+    <section class="py-20 border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto glass rounded-3xl p-10 md:p-14">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-28 h-28 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-1 flex-shrink-0">
+                        <div class="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
+                            <span class="text-3xl font-bold">H</span>
+                        </div>
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl font-bold mb-3">HIRO SUWA</h3>
+                        <div class="flex flex-wrap gap-2 justify-center md:justify-start mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); color: #93c5fd;">法人営業歴 5年</span>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold" style="background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3); color: #c4b5fd;">法人開発歴 6年</span>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold" style="background: rgba(236,72,153,0.15); border: 1px solid rgba(236,72,153,0.3); color: #f9a8d4;">会社経営歴 13年</span>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-1">
+                            AI、語学、業務効率化をメインに発信。
+                        </p>
+                        <p class="text-gray-300 text-sm font-bold mb-1">社会不適合者が実践する生産性ハック</p>
+                        <p class="text-gray-500 text-xs leading-relaxed mb-4">
+                            人生のどん底を味わった人間が提案する、これからの人間社会を生き抜くためのノウハウを無料で公開しています。
+                        </p>
+                        <div class="flex gap-3 justify-center md:justify-start">
+                            <a href="index.html" class="text-sm text-blue-400 hover:underline">ブログ</a>
+                            <span class="text-gray-600">|</span>
+                            <a href="https://note.com/ready_bison5376" target="_blank" rel="noopener noreferrer" class="text-sm text-green-400 hover:underline">note</a>
+                            <span class="text-gray-600">|</span>
+                            <a href="https://www.youtube.com/@%E3%81%99%E3%82%8F%E3%81%B2%E3%82%8D%E3%82%86%E3%81%8D" target="_blank" rel="noopener noreferrer" class="text-sm text-red-400 hover:underline">YouTube</a>
+                            <span class="text-gray-600">|</span>
+                            <a href="https://stand.fm/channels/69fc230a35ae73791e11e9a4" target="_blank" rel="noopener noreferrer" class="text-sm hover:underline" style="color: #00c2b3;">stand.fm</a>
+                            <span class="text-gray-600">|</span>
+                            <a href="https://x.com/hiros0921" target="_blank" rel="noopener noreferrer" class="text-sm text-gray-300 hover:underline">X</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="py-8 border-t border-white/5">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-500 text-sm">&copy; 2025 HIRO SUWA. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // TODO: ここにメール配信サービスのAPI連携を追加
+            // 例: Mailchimp, ConvertKit, SendGrid など
+            this.classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
