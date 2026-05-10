@@ -1,13 +1,67 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "test記事",
-      "excerpt": "簡単テスト記事投稿",
-      "content": "blog記事,確認します",
-      "date": "2025-07-30",
-      "readTime": 1,
-      "category": ["blog", "AI"],
-      "image": ""
+      "title": "退去費用30万円を請求されたので裁判したら敷金15万円を取り返せた話",
+      "link": "https://note.com/ready_bison5376/n/nca9a1487dbb0",
+      "date": "2026-05-10",
+      "excerpt": "私自身の実体験をもとに書いています。特定の会社名、個人名、裁判所名などは出しません。法律的な助言ではなく一個人の経験談として読んでください。",
+      "image": "https://assets.st-note.com/production/uploads/images/274802231/rectangle_large_type_2_ac80dbf2ce533ba7b110ff0adfe9b278.png?width=800"
     },
-   
+    {
+      "title": "Substackを始めようと思った理由。フォロワーではなく「読者リスト」を持つ時代へ。",
+      "link": "https://note.com/ready_bison5376/n/n9166024fd64a",
+      "date": "2026-05-09",
+      "excerpt": "最近、Substackというサービスが気になっています。SNSのフォロワーではなく「読者リスト」を持つ時代へ。",
+      "image": "https://assets.st-note.com/production/uploads/images/274281668/rectangle_large_type_2_01a67ecd70ebc7f1886d4472e12020fe.png?width=800"
+    },
+    {
+      "title": "「コードが書けない」はもう言い訳にならない　Codexの簡単な使い方ガイド。",
+      "link": "https://note.com/ready_bison5376/n/n5ddf4d8c0b3a",
+      "date": "2026-05-05",
+      "excerpt": "プログラミングができなくても、AIツールを使えばアプリが作れる時代。Codexの使い方を初心者向けに解説します。",
+      "image": "https://assets.st-note.com/production/uploads/images/273092951/rectangle_large_type_2_05fec4b9535141bf3315089e4f193c97.png?width=800"
+    },
+    {
+      "title": "新幹線の車内アナウンス。「現在5分遅れています」。これだけでイギリス人大爆笑。",
+      "link": "https://note.com/ready_bison5376/n/nd37053693125",
+      "date": "2026-04-15",
+      "excerpt": "仕事のために新大阪に向かっていた車内で、天候が悪かったこともあり、アナウンスが流れました。日本と海外の時間感覚の違いについて。",
+      "image": "https://assets.st-note.com/production/uploads/images/267642320/rectangle_large_type_2_6c2c33102829ead2c856b6a7e849fa32.jpg?width=800"
+    },
+    {
+      "title": "iPhoneで撮った写真、Macに送ると開けない問題を1分で解決する方法",
+      "link": "https://note.com/ready_bison5376/n/n1a118fa46c46",
+      "date": "2026-03-06",
+      "excerpt": "iPhoneで撮った写真をMacにAirDropしたら「このファイルは開けません」。この問題を1分で解決する方法を紹介します。",
+      "image": "https://assets.st-note.com/production/uploads/images/256804971/rectangle_large_type_2_eb95f0398bc1880895fe6444cf44ff09.jpeg?width=800"
+    },
+    {
+      "title": "夫の手取りが増えない前提で作る\"10年家計設計\"",
+      "link": "https://note.com/ready_bison5376/n/n23ef0e22968c",
+      "date": "2026-03-04",
+      "excerpt": "収入を増やすより先に、家計の\"土台\"を作る。10年後が変わります。",
+      "image": "https://assets.st-note.com/production/uploads/images/256385483/rectangle_large_type_2_fce481c1fa4113e8c8be3cc85a76c18ee.png?width=800"
+    },
+    {
+      "title": "月3万円浮かせる固定費削減マニュアル【30〜40代主婦向け完全版】",
+      "link": "https://note.com/ready_bison5376/n/n9a6613efc97e",
+      "date": "2026-03-03",
+      "excerpt": "固定費を見直すだけで月3万円浮く。30〜40代向けに固定費削減の完全版マニュアルを解説します。",
+      "image": "https://assets.st-note.com/production/uploads/images/256406552/rectangle_large_type_2_cd06b9a110a78a0da6767315e693738d.png?width=800"
+    },
+    {
+      "title": "【有料級】台湾有事に備える日本人の生き残り方法完全版",
+      "link": "https://note.com/ready_bison5376/n/nb7207099eb92",
+      "date": "2025-11-15",
+      "excerpt": "2025年から始める「10年後も生き残る人」の戦略ガイド。有事に備えるために今からできることをまとめました。",
+      "image": "https://assets.st-note.com/production/uploads/images/229586357/rectangle_large_type_2_55333797f98dcc6b749c5ab98e63d678.png?width=800"
+    },
+    {
+      "title": "【完全保存版】人類が火星に移住するために必要な全て",
+      "link": "https://note.com/ready_bison5376/n/n41ee18403b6c",
+      "date": "2025-11-05",
+      "excerpt": "あなたの子供は、火星で生まれるかもしれない。火星移住に必要なことを徹底解説。",
+      "image": "https://assets.st-note.com/production/uploads/images/227285649/rectangle_large_type_2_c626f37c94be503895159027246bc427.png?width=800"
+    }
+  ]
+}

@@ -309,9 +309,6 @@
                     <div class="relative">
                         <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
                         <img src="images/profile-image.png" alt="Hiro Suwa" class="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-white/10">
-                        <div class="absolute -bottom-4 -right-4 glass-effect-strong px-6 py-3 rounded-full">
-                            <span class="text-sm font-bold text-blue-400">フルスタックエンジニア</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -626,154 +623,124 @@
             }
         });
         
-        // ブログ記事を表示する関数
-        async function displayBlogPosts() {
+        // note記事データ（直接埋め込み）
+        const NOTE_POSTS = [
+            {
+                title: "退去費用30万円を請求されたので裁判したら敷金15万円を取り返せた話",
+                link: "https://note.com/ready_bison5376/n/nca9a1487dbb0",
+                date: "2026-05-10",
+                excerpt: "私自身の実体験をもとに書いています。特定の会社名、個人名、裁判所名などは出しません。法律的な助言ではなく一個人の経験談として読んでください。",
+                image: "https://assets.st-note.com/production/uploads/images/274802231/rectangle_large_type_2_ac80dbf2ce533ba7b110ff0adfe9b278.png?width=800"
+            },
+            {
+                title: "Substackを始めようと思った理由。フォロワーではなく「読者リスト」を持つ時代へ。",
+                link: "https://note.com/ready_bison5376/n/n9166024fd64a",
+                date: "2026-05-09",
+                excerpt: "最近、Substackというサービスが気になっています。SNSのフォロワーではなく「読者リスト」を持つ時代へ。",
+                image: "https://assets.st-note.com/production/uploads/images/274281668/rectangle_large_type_2_01a67ecd70ebc7f1886d4472e12020fe.png?width=800"
+            },
+            {
+                title: "「コードが書けない」はもう言い訳にならない　Codexの簡単な使い方ガイド。",
+                link: "https://note.com/ready_bison5376/n/n5ddf4d8c0b3a",
+                date: "2026-05-05",
+                excerpt: "プログラミングができなくても、AIツールを使えばアプリが作れる時代。Codexの使い方を初心者向けに解説します。",
+                image: "https://assets.st-note.com/production/uploads/images/273092951/rectangle_large_type_2_05fec4b9535141bf3315089e4f193c97.png?width=800"
+            },
+            {
+                title: "新幹線の車内アナウンス。「現在5分遅れています」。これだけでイギリス人大爆笑。",
+                link: "https://note.com/ready_bison5376/n/nd37053693125",
+                date: "2026-04-15",
+                excerpt: "仕事のために新大阪に向かっていた車内で、天候が悪かったこともあり、アナウンスが流れました。日本と海外の時間感覚の違いについて。",
+                image: "https://assets.st-note.com/production/uploads/images/267642320/rectangle_large_type_2_6c2c33102829ead2c856b6a7e849fa32.jpg?width=800"
+            },
+            {
+                title: "iPhoneで撮った写真、Macに送ると開けない問題を1分で解決する方法",
+                link: "https://note.com/ready_bison5376/n/n1a118fa46c46",
+                date: "2026-03-06",
+                excerpt: "iPhoneで撮った写真をMacにAirDropしたら「このファイルは開けません」。この問題を1分で解決する方法を紹介します。",
+                image: "https://assets.st-note.com/production/uploads/images/256804971/rectangle_large_type_2_eb95f0398bc1880895fe6444cf44ff09.jpeg?width=800"
+            },
+            {
+                title: "夫の手取りが増えない前提で作る\"10年家計設計\"",
+                link: "https://note.com/ready_bison5376/n/n23ef0e22968c",
+                date: "2026-03-04",
+                excerpt: "収入を増やすより先に、家計の\"土台\"を作る。10年後が変わります。",
+                image: "https://assets.st-note.com/production/uploads/images/256385483/rectangle_large_type_2_fce481c1fa4113e8c8be3cc85a76c18ee.png?width=800"
+            },
+            {
+                title: "月3万円浮かせる固定費削減マニュアル【30〜40代主婦向け完全版】",
+                link: "https://note.com/ready_bison5376/n/n9a6613efc97e",
+                date: "2026-03-03",
+                excerpt: "固定費を見直すだけで月3万円浮く。30〜40代向けに固定費削減の完全版マニュアルを解説します。",
+                image: "https://assets.st-note.com/production/uploads/images/256406552/rectangle_large_type_2_cd06b9a110a78a0da6767315e693738d.png?width=800"
+            },
+            {
+                title: "【有料級】台湾有事に備える日本人の生き残り方法完全版",
+                link: "https://note.com/ready_bison5376/n/nb7207099eb92",
+                date: "2025-11-15",
+                excerpt: "2025年から始める「10年後も生き残る人」の戦略ガイド。有事に備えるために今からできることをまとめました。",
+                image: "https://assets.st-note.com/production/uploads/images/229586357/rectangle_large_type_2_55333797f98dcc6b749c5ab98e63d678.png?width=800"
+            },
+            {
+                title: "【完全保存版】人類が火星に移住するために必要な全て",
+                link: "https://note.com/ready_bison5376/n/n41ee18403b6c",
+                date: "2025-11-05",
+                excerpt: "あなたの子供は、火星で生まれるかもしれない。火星移住に必要なことを徹底解説。",
+                image: "https://assets.st-note.com/production/uploads/images/227285649/rectangle_large_type_2_c626f37c94be503895159027246bc427.png?width=800"
+            }
+        ];
+
+        // note記事を表示
+        function displayBlogPosts() {
             const container = document.getElementById('blog-posts-container');
             const noPostsMessage = document.getElementById('no-posts-message');
-            
-            try {
-                // posts.jsonから記事を取得
-                const response = await fetch('posts.json');
-                const data = await response.json();
-                const displayPosts = data.posts || [];
-            
-            if (displayPosts.length === 0) {
+
+            if (NOTE_POSTS.length === 0) {
                 container.classList.add('hidden');
                 noPostsMessage.classList.remove('hidden');
                 return;
             }
-            
+
             container.classList.remove('hidden');
             noPostsMessage.classList.add('hidden');
             container.innerHTML = '';
-            
-            // 各記事を表示
-            displayPosts.forEach(post => {
-                const categoryColors = {
-                    'Tech': 'blue',
-                    'AI': 'purple',
-                    'Design': 'pink',
-                    'UI/UX': 'indigo',
-                    'Performance': 'orange',
-                    'SEO': 'green'
-                };
-                
+
+            NOTE_POSTS.forEach(post => {
+                const img = post.image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop';
+                const noteUrl = post.link || '#';
                 const postHTML = `
-                    <article class="glass-effect rounded-2xl overflow-hidden hover-glow animated-border group cursor-pointer transform transition-all duration-300 hover:scale-105">
+                    <article onclick="window.open('${noteUrl}','_blank')" class="glass-effect rounded-2xl overflow-hidden hover-glow animated-border group cursor-pointer transform transition-all duration-300 hover:scale-105">
                         <div class="h-48 relative overflow-hidden">
-                            <img src="${post.image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop'}" alt="${post.title}" class="w-full h-full object-cover">
+                            <img src="${img}" alt="${post.title}" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                            <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold" style="background:rgba(65,201,180,0.25);color:#41c9b4;border:1px solid rgba(65,201,180,0.4);">note</span>
                         </div>
                         <div class="p-8">
-                            <div class="flex items-center justify-between mb-4 text-sm text-gray-400">
+                            <div class="flex items-center mb-4 text-sm text-gray-400">
                                 <div class="flex items-center gap-2">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM4 8h12v8H4V8z" clip-rule="evenodd"></path>
                                     </svg>
                                     <span>${formatDate(post.date)}</span>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span>${post.readTime}分</span>
-                                </div>
                             </div>
                             <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">${post.title}</h3>
                             <p class="text-gray-300 mb-6 leading-relaxed line-clamp-3">${post.excerpt}</p>
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center">
                                 <span class="text-blue-400 font-medium group-hover:text-blue-300 transition-colors flex items-center gap-2">
-                                    続きを読む
+                                    noteで読む
                                     <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                     </svg>
                                 </span>
-                                <div class="flex space-x-2">
-                                    ${(post.category || []).map(cat => {
-                                        const color = categoryColors[cat] || 'gray';
-                                        return `<span class="px-3 py-1 bg-${color}-500/20 rounded-full text-xs">${cat}</span>`;
-                                    }).join('')}
-                                </div>
                             </div>
                         </div>
-                    </article>
-                `;
-                container.innerHTML += postHTML;
-            });
-            } catch (error) {
-                console.error('記事の読み込みに失敗しました:', error);
-                // エラーの場合はLocalStorageから読み込む（フォールバック）
-                const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
-                if (posts.length > 0) {
-                    displayPostsFromLocal(posts);
-                } else {
-                    container.classList.add('hidden');
-                    noPostsMessage.classList.remove('hidden');
-                }
-            }
-        }
-        
-        // LocalStorageから記事を表示する関数（フォールバック用）
-        function displayPostsFromLocal(posts) {
-            const container = document.getElementById('blog-posts-container');
-            container.innerHTML = '';
-            
-            posts.forEach(post => {
-                const categoryColors = {
-                    'Tech': 'blue',
-                    'AI': 'purple',
-                    'Design': 'pink',
-                    'UI/UX': 'indigo',
-                    'Performance': 'orange',
-                    'SEO': 'green'
-                };
-                
-                const postHTML = `
-                    <article class="glass-effect rounded-2xl overflow-hidden hover-glow animated-border group cursor-pointer transform transition-all duration-300 hover:scale-105">
-                        <div class="h-48 relative overflow-hidden">
-                            <img src="${post.image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop'}" alt="${post.title}" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                            <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                        </div>
-                        <div class="p-8">
-                            <div class="flex items-center justify-between mb-4 text-sm text-gray-400">
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM4 8h12v8H4V8z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span>${formatDate(post.date)}</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span>${post.readTime}分</span>
-                                </div>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">${post.title}</h3>
-                            <p class="text-gray-300 mb-6 leading-relaxed line-clamp-3">${post.excerpt}</p>
-                            <div class="flex items-center justify-between">
-                                <span class="text-blue-400 font-medium group-hover:text-blue-300 transition-colors flex items-center gap-2">
-                                    続きを読む
-                                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                </span>
-                                <div class="flex space-x-2">
-                                    ${(post.category || []).map(cat => {
-                                        const color = categoryColors[cat] || 'gray';
-                                        return `<span class="px-3 py-1 bg-${color}-500/20 rounded-full text-xs">${cat}</span>`;
-                                    }).join('')}
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                `;
+                    </article>`;
                 container.innerHTML += postHTML;
             });
         }
-        
+
         // 日付フォーマット関数
         function formatDate(dateString) {
             const date = new Date(dateString);
@@ -782,7 +749,7 @@
             const day = String(date.getDate()).padStart(2, '0');
             return `${year}.${month}.${day}`;
         }
-        
+
         // ページ読み込み時に記事を表示
         document.addEventListener('DOMContentLoaded', () => {
             displayBlogPosts();
