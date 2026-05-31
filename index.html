@@ -711,12 +711,13 @@
             }
         ];
 
-        // note記事を表示
-        function displayBlogPosts() {
+        // note記事を表示（posts未指定時は埋め込みデータを使用）
+        function displayBlogPosts(posts) {
+            const list = posts && posts.length ? posts : NOTE_POSTS;
             const container = document.getElementById('blog-posts-container');
             const noPostsMessage = document.getElementById('no-posts-message');
 
-            if (NOTE_POSTS.length === 0) {
+            if (list.length === 0) {
                 container.classList.add('hidden');
                 noPostsMessage.classList.remove('hidden');
                 return;
@@ -726,7 +727,7 @@
             noPostsMessage.classList.add('hidden');
             container.innerHTML = '';
 
-            NOTE_POSTS.forEach(post => {
+            list.forEach(post => {
                 const img = post.image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop';
                 const noteUrl = post.link || '#';
                 const postHTML = `
@@ -747,7 +748,7 @@
                                 </div>
                             </div>
                             <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">${post.title}</h3>
-                            <p class="text-gray-300 mb-6 leading-relaxed line-clamp-3">${post.excerpt}</p>
+                            <p class="text-gray-300 mb-6 leading-relaxed line-clamp-3">${post.excerpt || 'noteで続きを読む'}</p>
                             <div class="flex items-center">
                                 <span class="text-blue-400 font-medium group-hover:text-blue-300 transition-colors flex items-center gap-2">
                                     noteで読む
@@ -771,9 +772,27 @@
             return `${year}.${month}.${day}`;
         }
 
+        // noteの最新記事をAPI（Netlify Function）から取得。失敗時は埋め込みデータで表示。
+        async function loadAndDisplayPosts() {
+            // まず埋め込みデータで即時表示（体感速度を確保）
+            displayBlogPosts(NOTE_POSTS);
+            try {
+                const res = await fetch('/api/note-rss', { cache: 'no-store' });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (data && Array.isArray(data.posts) && data.posts.length > 0) {
+                    // 取得成功 → 最新記事で上書き表示
+                    displayBlogPosts(data.posts);
+                }
+            } catch (e) {
+                // 取得失敗時は埋め込みデータのまま（何もしない）
+                console.warn('note RSSの取得に失敗しました。埋め込みデータを表示します。', e);
+            }
+        }
+
         // ページ読み込み時に記事を表示
         document.addEventListener('DOMContentLoaded', () => {
-            displayBlogPosts();
+            loadAndDisplayPosts();
         });
     </script>
 </body>

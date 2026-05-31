@@ -1,3 +1,13 @@
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# note RSS取得API（SPAフォールバックより前に置く必要がある）
+[[redirects]]
+  from = "/api/note-rss"
+  to = "/.netlify/functions/note-rss"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
